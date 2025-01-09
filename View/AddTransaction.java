@@ -32,7 +32,7 @@ public class AddTransaction {
         nama.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panel.add(nama);
 
-        JLabel alamatLabel = new JLabel("alamat");
+        JLabel alamatLabel = new JLabel("Alamat");
         alamatLabel.setBounds(50, 125, 150, 20);
         panel.add(alamatLabel);
 
@@ -59,14 +59,14 @@ public class AddTransaction {
         berat.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panel.add(berat);
 
-        String[] shipmentStatusList = Controller.TransactionSection.getPackageCategory();
+        String[] packageTypeList = Controller.TransactionSection.getPackageCategory();
 
-        JComboBox shipmentStatus = new JComboBox(shipmentStatusList);
-        shipmentStatus.setBounds(50, 325, 300, 30);
-        shipmentStatus.setMaximumSize(new Dimension(190,20));
-        shipmentStatus.setSelectedItem(shipmentStatusList[0]);
-        shipmentStatus.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(shipmentStatus);
+        JComboBox packageType = new JComboBox(packageTypeList);
+        packageType.setBounds(50, 325, 300, 30);
+        packageType.setMaximumSize(new Dimension(190,20));
+        packageType.setSelectedItem(packageTypeList[0]);
+        packageType.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(packageType);
 
         JButton simpan = new JButton("Simpan");
         simpan.setBounds(220, 390, 100, 30);
@@ -84,10 +84,36 @@ public class AddTransaction {
 
         simpan.addActionListener(e -> {
             boolean valid = true;
+            double packageWeight = 0;
+            int cost = 0;
             if (nama.getText().isEmpty() || alamat.getText().isEmpty() || noTelp.getText().isEmpty() ||
                     berat.getText().isEmpty()) {
                 valid = false;
                 JOptionPane.showMessageDialog(frame, "Please fill all required fields.");
+            }
+            try {
+                packageWeight = Double.parseDouble(berat.getText());
+                if (packageWeight == 0) {
+                    valid = false;
+                }
+                else{
+                    if (packageWeight < 1) {
+                        cost = 1;
+                    }
+                    else{
+                        cost = (int)Math.round(packageWeight);
+                    }
+                }
+            } catch (Exception f) {
+                JOptionPane.showMessageDialog(null, "Berat harus angka!", "Weight", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (valid) {
+                Controller.TransactionSection.inputDatatoDB(packageType.getSelectedItem().toString(), packageWeight, cost, nama.getText(), alamat.getText(), noTelp.getText());
+                Menu.menu();
+                frame.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Pastikan semua field sudah terisi dan benar", "Add Transaction", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 

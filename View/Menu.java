@@ -15,18 +15,20 @@ public class Menu {
         Dimension screenSize = toolkit.getScreenSize();
 
         PratamaExpressFrame frame = new PratamaExpressFrame("Menu");
-        frame.setBounds(screenSize.width/2 - 300/2, screenSize.height/2 - 120/2, 300, 120);
+        frame.setBounds(screenSize.width/2 - 400/2, screenSize.height/2 - 120/2, 400, 120);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout());
 
         JButton login = new JButton("Login");
         JButton register = new JButton("Registrasi");
+        JButton detailTransaction = new JButton("Detail Transaction");
         JButton addTransaction = new JButton("Add Transaction");
         JButton viewHistory = new JButton("View History");
 
         mainPanel.add(login);
         mainPanel.add(register);
+        mainPanel.add(detailTransaction);
         mainPanel.add(addTransaction);
         mainPanel.add(viewHistory);
 
@@ -43,14 +45,26 @@ public class Menu {
         if (SingletonManager.getInstance().getCustomer() == null) {
             addTransaction.setEnabled(false);
             viewHistory.setEnabled(false);
+            detailTransaction.setEnabled(false);
         }
         else{
             addTransaction.setEnabled(true);
             viewHistory.setEnabled(true);
+            detailTransaction.setEnabled(true);
         }
 
         addTransaction.addActionListener(e -> {
             AddTransaction.addTransaction();
+            frame.dispose();
+        });
+
+        detailTransaction.addActionListener(e -> {
+            AddDetailTransaction.addDetailTransaction();
+            frame.dispose();
+        });
+
+        viewHistory.addActionListener(e -> {
+            HistoryPaket.viewHistory();
             frame.dispose();
         });
 
