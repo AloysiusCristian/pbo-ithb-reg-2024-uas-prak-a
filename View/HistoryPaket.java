@@ -23,7 +23,7 @@ public class HistoryPaket {
         int start_x = screenWidth / 2 - (FRAME_WIDTH / 2); // Center frame horizontally
         int start_y = screenHeight / 2 - (FRAME_HEIGHT / 2); // Center frame vertically
 
-        PratamaExpressFrame frame = new PratamaExpressFrame("Login Menu"); // Create frame and set title
+        PratamaExpressFrame frame = new PratamaExpressFrame("History Transaction"); // Create frame and set title
 
         frame.setBounds(start_x, start_y, FRAME_WIDTH, FRAME_HEIGHT); // Set frame bounds
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
