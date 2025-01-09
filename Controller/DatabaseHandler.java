@@ -36,7 +36,6 @@ public class DatabaseHandler extends SQLException{
     public static Connection connect() {
         try {
             con = logOn();
-            System.out.println("Koneksi Berhasil");
         } catch (Exception ex) {
             System.out.println("Error occured when connecting to database");
         }
